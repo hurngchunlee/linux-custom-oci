@@ -1,0 +1,21 @@
+# Firewall module
+# Source: modules/networking.nix
+#   networking.firewall.enable = true
+#   networking.firewall.allowedTCPPorts = []
+#   networking.firewall.allowedUDPPorts = []
+#   networking.firewall.allowPing = false
+#   services.avahi.openFirewall = true  (mDNS 5353/UDP kept open)
+#
+# Additionally: allow all inbound traffic originating from localhost.
+#
+# firewalld is enabled and active by default on Fedora Silverblue.
+# The default zone (FedoraWorkstation) already blocks uninvited inbound
+# traffic and keeps mDNS (5353/UDP) open for Avahi — no changes needed there.
+#
+# This script uses firewall-offline-cmd (safe to run without a live daemon,
+# correct for image build time) to:
+#   1. Block ICMP echo-request/echo-reply (ping) from external networks.
+#   2. Create a policy that allows all traffic to/from localhost (loopback).
+type: script
+scripts:
+  - firewall.sh

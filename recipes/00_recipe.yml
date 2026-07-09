@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
+---
+name: laptop-fedora-gnome
+description: "GNOME laptop image based on Universal Blue Silverblue."
+
+base-image: ghcr.io/ublue-os/silverblue-main
+image-version: 44
+
+modules:
+  - from-file: packages.yml
+  - from-file: services.yml
+  - from-file: laptop-kargs.yml
+  - from-file: docker.yml
+  - from-file: locale.yml
+  - from-file: firewall.yml
+  - from-file: eduvpn.yml

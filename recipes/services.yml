@@ -1,0 +1,28 @@
+# Services module
+# Source: modules/networking.nix, modules/power.nix, modules/thermal.nix
+# Services already enabled by default in Fedora 42 Silverblue and skipped:
+#   NetworkManager, PipeWire (+ pulse/alsa/jack compat), GDM, GNOME, rtkit
+type: systemd
+
+system:
+  enabled:
+    # From modules/networking.nix: services.avahi.enable = true
+    - avahi-daemon.service
+
+    # From hardware/custom/no-nvidia-gpu.nix: services.fwupd.enable = true
+    # (may already be enabled in UB base; safe to re-declare)
+    - fwupd.service
+
+    # From hardware/custom/no-nvidia-gpu.nix: services.fstrim.enable = true
+    # Periodic SSD TRIM for drive health
+    - fstrim.timer
+
+    # From modules/power.nix: services.upower.enable = true
+    # Battery status provider for GNOME shell
+    - upower.service
+
+    - tuned.service
+
+  disabled:
+    # From modules/networking.nix: services.openssh.enable = false
+    - sshd.service

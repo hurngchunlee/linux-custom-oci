@@ -1,0 +1,6 @@
+[eduvpn-client]
+name=eduVPN for Linux 4.x (Fedora $releasever)
+baseurl=https://app.eduvpn.org/linux/v4/rpm/fedora-$releasever-$basearch
+gpgkey=https://app.eduvpn.org/linux/v4/rpm/app+linux@eduvpn.org.asc
+gpgcheck=1
+enabled=1
