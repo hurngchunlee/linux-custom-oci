@@ -4,3 +4,9 @@ modules:
     files:
       - source: etc
         destination: /etc
+
+  # Provision user group to run bootc for update/rollback
+  - type: script
+    scripts:
+      - |
+        groupadd -r bootc-users
