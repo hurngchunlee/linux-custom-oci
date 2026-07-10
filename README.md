@@ -1,43 +1,27 @@
-# BlueBuild Template &nbsp; [![bluebuild build badge](https://github.com/blue-build/template/actions/workflows/build.yml/badge.svg)](https://github.com/blue-build/template/actions/workflows/build.yml)
+# Custom OCI bootc image
 
-See the [BlueBuild docs](https://blue-build.org/how-to/setup/) for quick setup instructions for setting up your own repository based on this template.
+Custom OCI bootc image based on an atomic Fedora (currently Fedora Silverblue).
 
-After setup, it is recommended you update this README to describe your custom image.
+## OCI build
 
-## Installation
+When the Bluebuild recipes are changed in this repository, OCI image build via the Bluebuild GitHub Action can be triggered either manually or by publishing a new GitHub release of the repository.
 
-> [!WARNING]  
-> [This is an experimental feature](https://www.fedoraproject.org/wiki/Changes/OstreeNativeContainerStable), try at your own discretion.
+A setup for container signing is needed for a newly cloned repository on GitHub, see [here](https://blue-build.org/how-to/cosign/) for the instruction.
 
-To rebase an existing atomic Fedora installation to the latest build:
+## Creating installer ISO
 
-- First rebase to the unsigned image, to get the proper signing keys and policies installed:
-  ```
-  rpm-ostree rebase ostree-unverified-registry:ghcr.io/blue-build/template:latest
-  ```
-- Reboot to complete the rebase:
-  ```
-  systemctl reboot
-  ```
-- Then rebase to the signed image, like so:
-  ```
-  rpm-ostree rebase ostree-image-signed:docker://ghcr.io/blue-build/template:latest
-  ```
-- Reboot again to complete the installation
-  ```
-  systemctl reboot
-  ```
+Clone the repository on a local system with podman installed, and run the [isobuild.sh](isobuild.sh) script to create a installation ISO that uses Anaconda for unattended installation.  See [isobuild.toml](isobuild.toml) file for the configuration.
 
-The `latest` tag will automatically point to the latest build. That build will still always use the Fedora version specified in `recipe.yml`, so you won't get accidentally updated to the next major version.
+The output ISO will be produced in the directory `output/bootiso`.
 
-## ISO
+## Installation with ISO
 
-If build on Fedora Atomic, you can generate an offline ISO with the instructions available [here](https://blue-build.org/how-to/generate-iso/#_top). These ISOs cannot unfortunately be distributed on GitHub for free due to large sizes, so for public projects something else has to be used for hosting.
+__The following scenario was tested in GNOME Boxes__
 
-## Verification
+- Flash the ISO to a USB drive
+- Boot the system from the USB drive. After the kickstart finishes the installation, system is rebooted into GNOME for first-time setup.
 
-These images are signed with [Sigstore](https://www.sigstore.dev/)'s [cosign](https://github.com/sigstore/cosign). You can verify the signature by downloading the `cosign.pub` file from this repo and running the following command:
 
-```bash
-cosign verify --key cosign.pub ghcr.io/blue-build/template
-```
+## System upgrade with bootc
+
+The system upgrade/rollback is done via bootc, see [here](https://bootc.dev/bootc/upgrades.html) for more information.
