@@ -11,7 +11,7 @@ modules:
   - from-file: services.yml
   - from-file: laptop-kargs.yml
   - from-file: docker.yml
-  - from-file: locale.yml
   - from-file: firewall.yml
   - from-file: eduvpn.yml
+  - from-file: config.yml
   - type: signing

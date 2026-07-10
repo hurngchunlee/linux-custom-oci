@@ -1,0 +1,6 @@
+# Static system configuration files in /etc directory
+modules:
+  - type: files
+    files:
+      - source: etc
+        destination: /etc
