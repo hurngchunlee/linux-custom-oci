@@ -1,0 +1,1 @@
+%bootc-users ALL:NOPASSWD /usr/bin/bootc upgrade, /user/bin/bootc rollback, /usr/bin/bootc status
