@@ -1,6 +1,5 @@
 [customizations.iso]
-volume_id = "IsoHongOS"
-application_id = "HongOS"
+volume_id = "Fedora-SilverBlue-44-Custom"
 publisher = "Hong Lee"
 
 [customizations.installer.kickstart]
@@ -51,7 +50,7 @@ part pv.01 --grow --encrypted
 
 volgroup vg0 pv.01
 # Swap — size injected here from %pre calculation (RAM × 1.2 MB)
-#%include /tmp/swap-size.ks
+%include /tmp/swap-size.ks
 logvol / --vgname=vg0 --name=root --fstype=xfs --size=1 --grow
 
 # ---------------------------------------------------------------------------
