@@ -1,11 +1,4 @@
 # Docker module
-# Source: modules/docker.nix
-#   virtualisation.docker.rootless.enable = true
-#   virtualisation.docker.rootless.setSocketVariable = true
-#
-# Installs Docker CE from the official Docker repository in rootless mode.
-# The system Docker daemon is NOT enabled; each user runs their own rootless
-# Docker daemon via systemd user session, matching the NixOS configuration.
 modules:
   - type: dnf
     repos:

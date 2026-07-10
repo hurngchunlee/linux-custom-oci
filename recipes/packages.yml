@@ -1,9 +1,4 @@
 # Packages module
-# Source: modules/common.nix, modules/power.nix, modules/thermal.nix
-# Packages already present in ublue-os/silverblue-main and skipped:
-#   firefox, htop, nvme-cli, vim, fwupd, wl-clipboard
-# Note: sbctl (Secure Boot key management) has no reliable Fedora RPM package.
-#   Install it post-boot via: sudo dnf copr enable chenxiaolong/sbctl && sudo dnf install sbctl
 type: dnf
 
 install:

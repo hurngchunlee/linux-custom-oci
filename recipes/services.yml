@@ -1,5 +1,4 @@
 # Services module
-# Source: modules/networking.nix, modules/power.nix, modules/thermal.nix
 # Services already enabled by default in Fedora 42 Silverblue and skipped:
 #   NetworkManager, PipeWire (+ pulse/alsa/jack compat), GDM, GNOME, rtkit
 type: systemd
@@ -25,4 +24,3 @@ system:
 
   disabled:
     - sshd.service
-    - docker.service

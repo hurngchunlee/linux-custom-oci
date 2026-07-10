@@ -1,27 +1,18 @@
 # Kernel arguments module
-# Source: hardware/custom/no-nvidia-gpu.nix, modules/power.nix
-#
 # Target: x86_64 laptops with integrated GPU only (Intel or AMD iGPU).
-# Disables the NVIDIA dGPU (Optimus) and enforces modesetting driver,
-# mirroring the NixOS no-nvidia-gpu.nix hardware profile.
+# Disables the NVIDIA dGPU (Optimus) and enforces modesetting driver
 type: kargs
 arch: x86_64
 
 kargs:
   # --- GPU: disable NVIDIA dGPU, force integrated GPU / modesetting ---
-  # From hardware/custom/no-nvidia-gpu.nix:
-  #   services.xserver.videoDrivers = ["modesetting"]
-  #   hardware.nvidia.modesetting.enable = false
-  #   hardware.nvidia.powerManagement.enable = false
   - modprobe.blacklist=nouveau        # blacklist open-source NVIDIA driver
   - rd.driver.blacklist=nouveau       # prevent nouveau loading in initrd
   - nvidia-drm.modeset=0              # disable NVIDIA DRM modesetting (dGPU off)
 
   # --- Power management ---
-  # From modules/power.nix: powerManagement.enable = true
-  # amd_pstate=active: use AMD P-State driver for better CPU power scaling on AMD laptops.
-  # Ignored on Intel CPUs; Intel uses intel_pstate which is active by default.
   - amd_pstate=active
+  - intel_pstate=active
 
   # Better NVMe power management (reduces idle power draw on SSDs)
   - nvme.noacpi=1
