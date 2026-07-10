@@ -4,3 +4,5 @@ modules:
     files:
       - source: etc
         destination: /etc
+      - source: usr
+        destination: /usr
