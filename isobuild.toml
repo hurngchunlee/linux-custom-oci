@@ -1,12 +1,10 @@
-# kickstart.ks — Anaconda automated install for laptop-fedora-gnome
-# Fully automated except for the LUKS passphrase prompt.
-#
-# Usage (embedded in ISO at build time):
-#   sudo bluebuild generate-iso \
-#     --iso-name laptop-fedora-gnome.iso \
-#     --kickstart kickstart.ks \
-#     recipe recipe.yml
+[customizations.iso]
+volume_id = "IsoHongOS"
+application_id = "HongOS"
+publisher = "Hong Lee"
 
+[customizations.installer.kickstart]
+contents = """
 # ---------------------------------------------------------------------------
 # %pre — calculate swap size based on physical RAM (for hibernation support)
 # Runs before the rest of the kickstart is parsed.
@@ -14,15 +12,15 @@
 # ---------------------------------------------------------------------------
 %pre
 #!/bin/bash
-RAM_MB=$(free -m | awk '/^Mem:/{print $2}')
-SWAP_MB=$(echo "$RAM_MB * 1.2 / 1" | bc)
-echo "part swap --size=${SWAP_MB}" > /tmp/swap-size.ks
+SWAP_MB=$(awk '/MemTotal/ {print int($2 * 1.2/1024)}' /proc/meminfo)
+echo "detected swap size: ${SWAP_MB} MiB"
+echo "logvol swap --vgname=vg0 --name=swap --fstype=swap --size=${SWAP_MB}" > /tmp/swap-size.ks
 %end
 
 # ---------------------------------------------------------------------------
 # Installer display mode — non-interactive except for LUKS passphrase prompt
 # ---------------------------------------------------------------------------
-cmdline
+text
 
 # ---------------------------------------------------------------------------
 # Locale — from modules/common.nix
@@ -42,14 +40,19 @@ zerombr
 clearpart --all --initlabel --disklabel=gpt
 
 # EFI System Partition (512 MB, FAT32)
-part /boot/efi  --fstype=efi  --size=512  --label=boot
+part /boot/efi  --fstype=efi  --size=512  --label=EFI
 
+# BOOT Partition (1024 MB, XFS)
+part /boot      --fstype=xfs  --size=1024 --label=boot
+
+
+# Root partition — LVM, LUKS2-encrypted XFS, takes all remaining space
+part pv.01 --grow --encrypted
+
+volgroup vg0 pv.01
 # Swap — size injected here from %pre calculation (RAM × 1.2 MB)
-%include /tmp/swap-size.ks
-
-# Root partition — LUKS2-encrypted XFS, takes all remaining space
-# Passphrase is prompted interactively (no --passphrase option)
-part /  --fstype=xfs  --grow  --encrypted  --luks-version=luks2  --label=root
+#%include /tmp/swap-size.ks
+logvol / --vgname=vg0 --name=root --fstype=xfs --size=1 --grow
 
 # ---------------------------------------------------------------------------
 # Bootloader — EFI
@@ -62,7 +65,14 @@ bootloader --location=mbr
 # ---------------------------------------------------------------------------
 rootpw --lock
 
+%post
+# Configure the installed system here
+systemctl enable gdm
+systemctl set-default graphical.target
+%end
+
 # ---------------------------------------------------------------------------
 # Reboot automatically after installation completes
 # ---------------------------------------------------------------------------
 reboot
+"""
