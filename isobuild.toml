@@ -1,6 +1,6 @@
-[customizations.iso]
-volume_id = "Fedora-SilverBlue-44-Custom"
-publisher = "Hong Lee"
+name = "Hong OS"
+description = "Custom Fedora"
+version = "0.0.1"
 
 [customizations.installer.kickstart]
 contents = """
