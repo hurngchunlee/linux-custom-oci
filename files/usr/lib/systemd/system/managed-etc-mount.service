@@ -1,0 +1,13 @@
+[Unit]
+Description=Apply immutable managed /etc configuration
+DefaultDependencies=no
+After=local-fs.target
+Before=basic.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/managed-etc-mount.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=basic.target
