@@ -2,7 +2,9 @@ modules:
 
   - type: script
     snippets:
-      - "mkdir -p /nix && mkdir -p /var/nix && mount --bind /var/nix /nix"
+      - "mkdir -p /nix"
+      - "mkdir -p /var/nix"
+      - "mount --bind /var/nix /nix"
 
   - type: dnf
     install:
