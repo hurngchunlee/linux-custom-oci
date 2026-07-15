@@ -8,19 +8,19 @@ image-version: 44
 
 modules:
 
-  # 1. Install all packages
+  # Install all packages
   - from-file: packages.yml
   - from-file: eduvpn.yml
   - from-file: docker.yml
   - from-file: nix.yml
 
-  # 2. Apply system policy/configuration
+  # Apply system policy/configuration
   - from-file: system.yml
 
-  # 3. Enable/configure services
+  # Enable/configure services
   - from-file: services.yml
 
-  # 5. Boot/kernel settings
+  # Boot/kernel settings
   - from-file: laptop-kargs.yml
 
   - type: signing
