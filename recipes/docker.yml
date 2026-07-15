@@ -13,7 +13,8 @@ modules:
         - docker-buildx-plugin
         - docker-compose-plugin
 
-  # Run the rootless Docker setup script at build time
-  - type: script
-    scripts:
-      - docker-rootless.sh
+  # docker daemon is disabled in favor of rootless setup
+  - type: systemd
+    system:
+      disabled:
+        - docker.service

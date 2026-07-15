@@ -1,4 +1,0 @@
-# Firewall module
-type: script
-scripts:
-  - firewall.sh

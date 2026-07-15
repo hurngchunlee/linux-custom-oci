@@ -11,14 +11,15 @@ modules:
       - source: usr/libexec/managed-etc-mount.sh
         destination: /usr/libexec/managed-etc-mount.sh
 
-  - type: systemd
-    system:
-      enabled:
-        - managed-etc-mount.service
-
-  # Provision user group to run bootc for update/rollback
   - type: script
+    scripts:
+      - firewall.sh
     snippets:
       - "chmod +x /usr/libexec/managed-etc-mount.sh"
       - "groupadd -r bootc-users"
       - "groupadd -r ssh-users"
+
+  - type: systemd
+    system:
+      enabled:
+        - managed-etc-mount.service

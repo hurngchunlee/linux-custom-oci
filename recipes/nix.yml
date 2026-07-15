@@ -3,7 +3,7 @@ modules:
     snippets:
       - "sh <(curl -L https://nixos.org/nix/install) --daemon"
 
-  - type: service
+  - type: systemd
     system:
       enabled:
         - nix-daemon.service
