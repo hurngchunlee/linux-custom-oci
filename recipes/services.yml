@@ -22,5 +22,5 @@ system:
 
     - tuned.service
 
-  disabled:
+  masked:
     - sshd.service

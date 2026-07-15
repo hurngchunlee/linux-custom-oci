@@ -1,0 +1,9 @@
+modules:
+  - type: script
+    snippets:
+      - "sh <(curl -L https://nixos.org/nix/install) --daemon"
+
+  - type: service
+    system:
+      enabled:
+        - nix-daemon.service

@@ -21,3 +21,4 @@ modules:
     snippets:
       - "chmod +x /usr/libexec/managed-etc-mount.sh"
       - "groupadd -r bootc-users"
+      - "groupadd -r ssh-users"

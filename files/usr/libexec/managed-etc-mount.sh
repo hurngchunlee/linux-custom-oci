@@ -11,6 +11,7 @@ fi
 
 controlled_files=(
     "$SRC_ROOT/ssh/sshd_config"
+    "$SRC_ROOT/ssh/sshd_config.d"
     "$SRC_ROOT/sudoers"
     "$SRC_ROOT/sudoers.d"
 )
