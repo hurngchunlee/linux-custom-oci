@@ -1,11 +1,4 @@
 modules:
   - type: script
     snippets:
-      - "sh <(curl -L https://nixos.org/nix/install) --daemon"
-      - "ls -l /usr/lib/systemd/system"
-      - "systemctl daemon-reload"
-
-  - type: systemd
-    system:
-      enabled:
-        - nix-daemon.service
+      - "sh <(curl -L https://nixos.org/nix/install) --daemon --yes"
