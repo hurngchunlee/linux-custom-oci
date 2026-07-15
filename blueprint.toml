@@ -1,6 +1,6 @@
-name = "Hong OS"
+name = "TG OS"
 description = "Custom Fedora"
-version = "0.0.1"
+version = "0.1.0"
 
 [customizations.installer.kickstart]
 contents = """

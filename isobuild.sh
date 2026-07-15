@@ -5,7 +5,7 @@ sudo podman run \
     --rm -it --privileged \
     --pull=newer \
     --security-opt label=type:unconfined_t \
-    -v ./isobuild.toml:/config.toml:ro \
+    -v ./blueprint.toml:/config.toml:ro \
     -v ./output:/output \
     -v /var/lib/containers/storage:/var/lib/containers/storage \
     ghcr.io/osbuild/bootc-image-builder:latest \
