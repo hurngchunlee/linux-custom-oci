@@ -1,4 +1,10 @@
 modules:
+
+  - type: script
+    snippets:
+      - "mkdir -p /var/nix"
+      - "ln -s /var/nix /nix"
+
   - type: dnf
     install:
       packages:
