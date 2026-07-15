@@ -1,4 +1,16 @@
 modules:
-  - type: script
-    snippets:
-      - "sh <(curl -L https://nixos.org/nix/install) --daemon --yes"
+  - type: files
+    files:
+      - source: usr/lib/tmpfiles.d/nix.conf
+        destination: /usr/lib/tmpfiles.d/nix.conf
+
+  - type: dnf
+    install:
+      packages:
+        - nix
+        - nix-daemon
+
+  - type: systemd
+    system:
+      enabled:
+        - nix-daemon.service
