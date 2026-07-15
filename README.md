@@ -6,7 +6,7 @@ Custom OCI bootc image based on an atomic Fedora (currently Fedora Silverblue).
 
 When the Bluebuild recipes are changed in this repository, OCI image build via the Bluebuild GitHub Action can be triggered either manually or by publishing a new GitHub release of the repository.
 
-_optional:_ For a newly cloned GitHub repository, a setup for container signing is needed for signing the OCI image.  See [here](https://blue-build.org/how-to/cosign/) for the instruction.
+_optional:_ For a newly cloned GitHub repository, a setup is needed for signing the OCI image.  See [here](https://blue-build.org/how-to/cosign/) for the instruction.
 
 ## Creating installer ISO
 
