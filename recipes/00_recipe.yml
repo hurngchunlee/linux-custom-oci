@@ -13,5 +13,6 @@ modules:
   - from-file: docker.yml
   - from-file: firewall.yml
   - from-file: eduvpn.yml
+  - from-file: nix.yml
   - from-file: system.yml
   - type: signing
