@@ -1,5 +1,7 @@
 #!/bin/bash
 
+image=ghcr.io/dccn-tg/fedora-silverblue:latest
+
 sudo podman run \
     --network=host \
     --rm -it --privileged \
@@ -12,4 +14,4 @@ sudo podman run \
       -v --log-level debug \
       --type anaconda-iso \
       --rootfs xfs \
-      ghcr.io/dccn-tg/fedora-silverblue:44
+      $image
