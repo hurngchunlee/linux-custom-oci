@@ -1,9 +1,4 @@
 modules:
-  - type: files
-    files:
-      - source: usr/lib/tmpfiles.d/nix.conf
-        destination: /usr/lib/tmpfiles.d/nix.conf
-
   - type: dnf
     install:
       packages:
