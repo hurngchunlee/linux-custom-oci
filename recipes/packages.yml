@@ -11,6 +11,13 @@ install:
     - usbutils           # provides lsusb
     - pciutils           # provides lspci
 
+    # OpenSCAP security audit tools (https://www.open-scap.org/)
+    - openscap-scanner
+    - scap-security-guide
+    # Modern compliance tool (https://github.com/complytime/complyctl)
+    - complyctl
+    - complyctl-openscap-plugin
+
     # From modules/power.nix
     - acpi               # battery / AC adapter / thermal info
 
