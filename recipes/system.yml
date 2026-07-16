@@ -14,6 +14,7 @@ modules:
   - type: script
     scripts:
       - firewall.sh
+      - gs-disable-dnf.sh
     snippets:
       - "chmod +x /usr/libexec/managed-etc-mount.sh"
       - "groupadd -r bootc-users"
