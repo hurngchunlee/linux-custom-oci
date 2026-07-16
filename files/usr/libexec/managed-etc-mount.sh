@@ -16,6 +16,7 @@ controlled_files=(
     "$SRC_ROOT/sudoers.d"
     "$SRC_ROOT/sysctl.conf"
     "$SRC_ROOT/sysctl.d"
+    "$SRC_ROOT/gdm/custom.conf"
 )
 
 

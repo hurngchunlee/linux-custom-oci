@@ -16,3 +16,9 @@ kargs:
 
   # Better NVMe power management (reduces idle power draw on SSDs)
   - nvme.noacpi=1
+
+  # --- Security / audit ---
+  - selinux=1
+  - enforcing=1
+  - audit=1
+  - audit_backlog_limit=8192

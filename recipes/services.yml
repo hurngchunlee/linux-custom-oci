@@ -24,3 +24,6 @@ system:
 
   masked:
     - sshd.service
+    - nfs-server.service
+    - rpcbind.service
+    - nftables.service
