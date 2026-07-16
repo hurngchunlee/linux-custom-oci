@@ -14,6 +14,8 @@ controlled_files=(
     "$SRC_ROOT/ssh/sshd_config.d"
     "$SRC_ROOT/sudoers"
     "$SRC_ROOT/sudoers.d"
+    "$SRC_ROOT/sysctl.conf"
+    "$SRC_ROOT/sysctl.d"
 )
 
 
