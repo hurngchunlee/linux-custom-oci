@@ -11,6 +11,10 @@ install:
     - usbutils           # provides lsusb
     - pciutils           # provides lspci
 
+    # passwordless authentication
+    - pam-u2f
+    - pamu2fcfg
+
     # OpenSCAP security audit tools (https://www.open-scap.org/)
     - openscap-scanner
     - scap-security-guide
