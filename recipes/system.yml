@@ -42,6 +42,7 @@ modules:
       - "ln -s /usr/lib/systemd/user/ostree-update-notify.timer /etc/systemd/user/timers.target.wants/ostree-update-notify.timer"
       - "groupadd -r bootc-users"
       - "groupadd -r ssh-users"
+      - "echo 'DONE'"
 
   - type: systemd
     system:
