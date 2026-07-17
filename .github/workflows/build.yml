@@ -23,6 +23,10 @@ jobs:
           # !! Add your recipes here
           - 00_recipe.yml
     steps:
+      - name: Generate image version
+        run: |
+          echo "IMAGE_VERSION=$(date +%Y%m%d).${github.run_number}" >> "$GITHUB_ENV"
+
       # the build is fully handled by the reusable github action
       - name: Build Custom Image
         uses: blue-build/github-action@v1.12

@@ -26,9 +26,16 @@ modules:
         destination: /usr/libexec/ostree-update-notify.sh
 
   - type: script
+    secrets:
+      - type: env
+        name: IMAGE_VERSION
+        mount:
+          type: env
+          name: IMAGE_VERSION
     scripts:
       - firewall.sh
       - gs-disable-dnf.sh
+      - update-os-release.sh
     snippets:
       - "chmod +x /usr/libexec/managed-etc-mount.sh"
       - "chmod +x /usr/libexec/ostree-update-notify.sh"
