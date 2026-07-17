@@ -12,7 +12,7 @@ version=$(
     jq -r '
         .deployments[]
         | select(.staged == true)
-        | .version
+        | "\(.version)[\(."container-image-reference-digest" | sub("^sha256:"; "") | .[0:8])]"
     ' |
     head -n1
 )
