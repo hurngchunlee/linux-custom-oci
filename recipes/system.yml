@@ -32,6 +32,7 @@ modules:
     snippets:
       - "chmod +x /usr/libexec/managed-etc-mount.sh"
       - "chmod +x /usr/libexec/ostree-update-notify.sh"
+      - "ln -s /usr/lib/systemd/user/ostree-update-notify.timer /etc/systemd/user/timers.target.wants/ostree-update-notify.timer"
       - "groupadd -r bootc-users"
       - "groupadd -r ssh-users"
 
