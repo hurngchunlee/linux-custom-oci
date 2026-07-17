@@ -25,7 +25,7 @@ jobs:
     steps:
       - name: Generate image version
         run: |
-          echo "IMAGE_VERSION=$(date +%Y%m%d).${github.run_number}" >> "$GITHUB_ENV"
+          echo "IMAGE_VERSION=$(date +%Y%m%d).${{ github.run_number }}" >> "$GITHUB_ENV"
 
       # the build is fully handled by the reusable github action
       - name: Build Custom Image
