@@ -5,11 +5,25 @@ modules:
       - source: etc
         destination: /etc
 
+      # systemd service unit files for managing immutable files/directories in /etc
       - source: usr/lib/systemd/system/managed-etc-mount.service
         destination: /usr/lib/systemd/system/managed-etc-mount.service
 
       - source: usr/libexec/managed-etc-mount.sh
         destination: /usr/libexec/managed-etc-mount.sh
+
+      # systemd service unit files for ostree update notification
+      - source: usr/lib/systemd/user/ostree-update-notify.service
+        destination: /usr/lib/systemd/user/ostree-update-notify.service
+
+      - source: usr/lib/systemd/user/ostree-update-notify.timer
+        destination: /usr/lib/systemd/user/ostree-update-notify.timer
+
+      - source: usr/lib/systemd/user-preset/90-ostree-update-notify.preset
+        destination: /usr/lib/systemd/user-preset/90-ostree-update-notify.preset
+
+      - source: usr/libexec/ostree-update-notify.sh
+        destination: /usr/libexec/ostree-update-notify.sh
 
   - type: script
     scripts:
@@ -17,6 +31,7 @@ modules:
       - gs-disable-dnf.sh
     snippets:
       - "chmod +x /usr/libexec/managed-etc-mount.sh"
+      - "chmod +x /usr/libexec/ostree-update-notify.sh"
       - "groupadd -r bootc-users"
       - "groupadd -r ssh-users"
 

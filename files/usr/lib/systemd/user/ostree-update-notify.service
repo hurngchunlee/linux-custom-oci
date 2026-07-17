@@ -1,0 +1,6 @@
+[Unit]
+Description=Notify about staged OSTree updates
+
+[Service]
+Type=oneshot
+ExecStart=/usr/libexec/ostree-update-notify.sh

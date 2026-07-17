@@ -1,0 +1,10 @@
+[Unit]
+Description=Check for staged OSTree updates
+
+[Timer]
+OnBootSec=10min
+OnUnitActiveSec=1h
+RandomizedDelaySec=15min
+
+[Install]
+WantedBy=timers.target
