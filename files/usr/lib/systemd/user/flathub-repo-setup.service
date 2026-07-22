@@ -1,0 +1,11 @@
+[Unit]
+Description=Initialize per-user Flathub repository
+After=graphical-session.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+RemainAfterExit=yes
+
+[Install]
+WantedBy=default.target

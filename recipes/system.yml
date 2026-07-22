@@ -25,6 +25,13 @@ modules:
       - source: usr/libexec/ostree-update-notify.sh
         destination: /usr/libexec/ostree-update-notify.sh
 
+      # systemd service unit file for setting up flathub repo in user session
+      - source: usr/lib/systemd/user/flathub-repo-setup.service
+        destination: /usr/lib/systemd/user/flathub-repo-setup.service
+
+      - source: usr/lib/systemd/user-preset/90-flathub-repo-setup.preset
+        destination: /usr/lib/systemd/user-preset/90-flathub-repo-setup.preset
+
   - type: script
     secrets:
       - type: env
@@ -40,6 +47,7 @@ modules:
       - "chmod +x /usr/libexec/managed-etc-mount.sh"
       - "chmod +x /usr/libexec/ostree-update-notify.sh"
       - "ln -s /usr/lib/systemd/user/ostree-update-notify.timer /etc/systemd/user/timers.target.wants/ostree-update-notify.timer"
+      - "ln -s /usr/lib/systemd/user/flathub-repo-setup.service /etc/systemd/user/default.target.wants/flathub-repo-setup.service"
       - "groupadd -r bootc-users"
       - "groupadd -r ssh-users"
       - "echo 'DONE'"
