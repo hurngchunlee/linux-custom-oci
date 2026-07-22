@@ -5,15 +5,55 @@ version = "0.1.0"
 [customizations.installer.kickstart]
 contents = """
 # ---------------------------------------------------------------------------
-# %pre — calculate swap size based on physical RAM (for hibernation support)
-# Runs before the rest of the kickstart is parsed.
-# RAM × 1.2, rounded down to nearest MB — matches NixOS install.sh logic.
+# %pre — determin installation drive, and partitions for swap, / and /home
 # ---------------------------------------------------------------------------
 %pre
 #!/bin/bash
+
+# Find the largest disk that is not removable.
+DISK=$(lsblk -dpno NAME,TYPE,RM,SIZE | \
+    awk '$2 == "disk" && $3 == 0 {print $1, $4}' | \
+    sort -k2 -h | \
+    tail -1 | \
+    awk '{print $1}')
+
+DISK_SIZE=$(lsblk -bdno SIZE "$DISK")
+DISK_SIZE_GIB=$((DISK_SIZE / 1024 / 1024 / 1024))
+DISK_NAME=$(basename $DISK)
+
+echo "detected disk: ${DISK}, size ${DISK_SIZE_GIB} GiB"
+
+cat > /tmp/partitions.ks <<EOF
+
+clearpart --all --initlabel --disklabel=gpt --drives=${DISK_NAME}
+
+# EFI System Partition (512 MB, FAT32)
+part /boot/efi  --fstype=efi  --size=512  --label=EFI --ondisk=${DISK_NAME}
+
+# BOOT Partition (1024 MB, XFS)
+part /boot      --fstype=xfs  --size=1024 --label=boot --ondisk=${DISK_NAME}
+
+# Root partition — LVM, LUKS2-encrypted XFS, takes all remaining space
+part pv.01 --grow --encrypted --ondisk=${DISK_NAME}
+
+volgroup vg0 pv.01
+
+EOF
+
 SWAP_MB=$(awk '/MemTotal/ {print int($2 * 1.2/1024)}' /proc/meminfo)
 echo "detected swap size: ${SWAP_MB} MiB"
-echo "logvol swap --vgname=vg0 --name=swap --fstype=swap --size=${SWAP_MB}" > /tmp/swap-size.ks
+
+# swap partition
+echo "logvol swap --vgname=vg0 --name=swap --fstype=swap --size=${SWAP_MB}" >> /tmp/partitions.ks
+
+# root partition and conditionally home partition
+if [ $(( DISK_SIZE_GIB - 2 - $SWAP_MB / 1024 )) -gt 250 ]; then
+    echo "logvol / --vgname=vg0 --name=root --fstype=xfs --size=102400" >> /tmp/partitions.ks
+    echo "logvol /home --vgname=vg0 --name=home --fstype=xfs --size=1 --grow" >> /tmp/partitions.ks
+else
+    echo "logvol / --vgname=vg0 --name=root --fstype=xfs --size=1 --grow" >> /tmp/partitions.ks
+fi
+
 %end
 
 # ---------------------------------------------------------------------------
@@ -36,22 +76,8 @@ timezone Europe/Amsterdam --utc
 # The LUKS passphrase for the root partition is prompted interactively.
 # ---------------------------------------------------------------------------
 zerombr
-clearpart --all --initlabel --disklabel=gpt
 
-# EFI System Partition (512 MB, FAT32)
-part /boot/efi  --fstype=efi  --size=512  --label=EFI
-
-# BOOT Partition (1024 MB, XFS)
-part /boot      --fstype=xfs  --size=1024 --label=boot
-
-
-# Root partition — LVM, LUKS2-encrypted XFS, takes all remaining space
-part pv.01 --grow --encrypted
-
-volgroup vg0 pv.01
-# Swap — size injected here from %pre calculation (RAM × 1.2 MB)
-%include /tmp/swap-size.ks
-logvol / --vgname=vg0 --name=root --fstype=xfs --size=1 --grow
+%include /tmp/partitions.ks
 
 # ---------------------------------------------------------------------------
 # Bootloader — EFI
