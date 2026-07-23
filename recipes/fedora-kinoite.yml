@@ -23,7 +23,4 @@ modules:
   # Boot/kernel settings
   - from-file: common/laptop-kargs.yml
 
-  # # Extra customization for KDE Plasma desktop
-  # - from-file: kde/appstore-disable-dnf.yml
-
   - type: signing
