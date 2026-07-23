@@ -9,18 +9,21 @@ image-version: 44
 modules:
 
   # Install all packages
-  - from-file: packages.yml
-  - from-file: eduvpn.yml
-  - from-file: docker.yml
-  - from-file: nix.yml
+  - from-file: common/packages.yml
+  - from-file: common/eduvpn.yml
+  - from-file: common/docker.yml
+  - from-file: common/nix.yml
 
   # Apply system policy/configuration
-  - from-file: system.yml
+  - from-file: common/system.yml
 
   # Enable/configure services
-  - from-file: services.yml
+  - from-file: common/services.yml
 
   # Boot/kernel settings
-  - from-file: laptop-kargs.yml
+  - from-file: common/laptop-kargs.yml
+
+  # Extra customization for GNOME desktop
+  - from-file: gnome/appstore-disable-dnf.yml
 
   - type: signing

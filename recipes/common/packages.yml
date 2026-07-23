@@ -15,6 +15,9 @@ install:
     - pam-u2f
     - pamu2fcfg
 
+    # password manager
+    - pass
+
     # OpenSCAP security audit tools (https://www.open-scap.org/)
     - openscap-scanner
     - scap-security-guide
