@@ -21,7 +21,8 @@ jobs:
       matrix:
         recipe:
           # !! Add your recipes here
-          - 00_recipe.yml
+          - fedora-silverblue.yml
+          - fedora-kinoite.yml
     steps:
       - name: Generate image version
         run: |

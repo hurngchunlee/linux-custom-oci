@@ -41,7 +41,6 @@ modules:
           name: IMAGE_VERSION
     scripts:
       - firewall.sh
-      - gs-disable-dnf.sh
       - update-os-release.sh
     snippets:
       - "chmod +x /usr/libexec/managed-etc-mount.sh"

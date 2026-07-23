@@ -92,7 +92,7 @@ rootpw --lock
 
 %post
 # Configure the installed system here
-systemctl enable gdm
+systemctl enable display-manager.service
 systemctl set-default graphical.target
 %end
 
